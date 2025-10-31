@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Song } from '../types';
 import { LoopMode } from '../types';
-import { PlayIcon, PauseIcon, SkipNextIcon, SkipPreviousIcon, ShuffleIcon, LoopIcon, LoopOneIcon, VolumeHighIcon, VolumeMuteIcon, MusicNoteIcon, CrossfadeIcon } from './Icons';
+import { PlayIcon, PauseIcon, SkipNextIcon, SkipPreviousIcon, ShuffleIcon, LoopIcon, LoopOneIcon, VolumeHighIcon, VolumeMuteIcon, MusicNoteIcon, CrossfadeIcon, SeriesPlayIcon } from './Icons';
 
 interface PlayerControlsProps {
   isPlaying: boolean;
@@ -17,7 +17,7 @@ interface PlayerControlsProps {
   playPrev: () => void;
   seek: (time: number) => void;
   setVolume: (volume: number) => void;
-  toggleShuffle: () => void;
+  setShuffle: (shuffleOn: boolean) => void;
   toggleLoop: () => void;
   toggleCrossfade: () => void;
 }
@@ -30,7 +30,7 @@ const formatTime = (seconds: number) => {
 
 const PlayerControls: React.FC<PlayerControlsProps> = React.memo(({
   isPlaying, currentTrack, currentTime, duration, volume, isShuffle, loopMode, isCrossfade,
-  togglePlayPause, playNext, playPrev, seek, setVolume, toggleShuffle, toggleLoop, toggleCrossfade
+  togglePlayPause, playNext, playPrev, seek, setVolume, setShuffle, toggleLoop, toggleCrossfade
 }) => {
   const onSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     seek(Number(e.target.value));
@@ -73,25 +73,36 @@ const PlayerControls: React.FC<PlayerControlsProps> = React.memo(({
 
         {/* Player Controls */}
         <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center space-x-4">
-            <button onClick={toggleCrossfade} title="Toggle Crossfade" className={`p-2 ${isCrossfade ? 'text-nothing-orange' : 'hover:text-nothing-text/70 dark:hover:text-nothing-bg/70'}`}>
-              <CrossfadeIcon className="w-5 h-5" />
-            </button>
-            <button onClick={toggleShuffle} className={`p-2 ${isShuffle ? 'text-nothing-orange' : 'hover:text-nothing-text/70 dark:hover:text-nothing-bg/70'}`}>
-              <ShuffleIcon className="w-5 h-5" />
-            </button>
-            <button onClick={playPrev} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
-              <SkipPreviousIcon className="w-6 h-6" />
-            </button>
-            <button onClick={togglePlayPause} className="w-12 h-12 flex items-center justify-center bg-nothing-text text-nothing-bg dark:bg-nothing-bg dark:text-nothing-text rounded-full shadow-lg">
-              {isPlaying ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6" />}
-            </button>
-            <button onClick={playNext} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
-              <SkipNextIcon className="w-6 h-6" />
-            </button>
-            <button onClick={toggleLoop} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
-              <LoopButton />
-            </button>
+          <div className="flex items-center justify-center w-full">
+            <div className="flex-1 flex justify-end space-x-2">
+                <button onClick={toggleCrossfade} title="Toggle Crossfade" className={`p-2 transition-colors ${isCrossfade ? 'text-nothing-orange' : 'hover:text-nothing-text/70 dark:hover:text-nothing-bg/70'}`}>
+                    <CrossfadeIcon className="w-5 h-5" />
+                </button>
+                <button onClick={() => setShuffle(false)} title="Series Play" className={`p-2 transition-colors ${!isShuffle ? 'text-nothing-orange' : 'hover:text-nothing-text/70 dark:hover:text-nothing-bg/70'}`}>
+                    <SeriesPlayIcon className="w-5 h-5" />
+                </button>
+            </div>
+
+            <div className="flex items-center space-x-2 mx-4">
+                <button onClick={playPrev} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
+                    <SkipPreviousIcon className="w-6 h-6" />
+                </button>
+                <button onClick={togglePlayPause} className="w-12 h-12 flex items-center justify-center bg-nothing-text text-nothing-bg dark:bg-nothing-bg dark:text-nothing-text rounded-full shadow-lg">
+                    {isPlaying ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6" />}
+                </button>
+                <button onClick={playNext} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
+                    <SkipNextIcon className="w-6 h-6" />
+                </button>
+            </div>
+            
+            <div className="flex-1 flex justify-start space-x-2">
+                <button onClick={() => setShuffle(true)} title="Shuffle" className={`p-2 transition-colors ${isShuffle ? 'text-nothing-orange' : 'hover:text-nothing-text/70 dark:hover:text-nothing-bg/70'}`}>
+                    <ShuffleIcon className="w-5 h-5" />
+                </button>
+                <button onClick={toggleLoop} className="p-2 hover:text-nothing-text/70 dark:hover:text-nothing-bg/70">
+                    <LoopButton />
+                </button>
+            </div>
           </div>
           <div className="w-full max-w-md flex items-center space-x-2 mt-2">
               <span className="text-xs w-10 text-center">{formatTime(currentTime)}</span>

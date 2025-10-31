@@ -96,3 +96,9 @@ export const CrossfadeIcon: React.FC<IconProps> = ({ className }) => (
         <line x1="20" y1="4" x2="4" y2="20" strokeDasharray="4 2"></line>
     </svg>
 );
+
+export const SeriesPlayIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 14h10v2H2v-2zm0-4h10v2H2V10zm0-4h10v2H2V6zM14 6v12l6-6-6-6z"></path>
+    </svg>
+);

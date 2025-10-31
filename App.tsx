@@ -197,7 +197,7 @@ const App: React.FC = () => {
                   playPrev={player.playPrev}
                   seek={player.seek}
                   setVolume={player.setVolume}
-                  toggleShuffle={player.toggleShuffle}
+                  setShuffle={player.setShuffle}
                   toggleLoop={player.toggleLoop}
                   toggleCrossfade={player.toggleCrossfade}
                 />

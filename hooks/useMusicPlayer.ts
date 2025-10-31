@@ -243,14 +243,15 @@ export const useMusicPlayer = (songs: Song[] = []) => {
     }
   };
 
-  const toggleShuffle = () => {
-    const newShuffleState = !isShuffle;
-    setIsShuffle(newShuffleState);
-    if (newShuffleState && songs.length > 0) {
+  const setShuffle = (shuffleOn: boolean) => {
+    if (isShuffle === shuffleOn) return;
+
+    setIsShuffle(shuffleOn);
+    if (shuffleOn && songs.length > 0) {
         const newShuffled = shuffleArray(songs);
         setShuffledPlaylist(newShuffled);
         playTrack(Math.floor(Math.random() * newShuffled.length));
-    } else {
+    } else { // turning shuffle off
         const newIndex = currentTrack ? songs.findIndex(s => s.id === currentTrack.id) : 0;
         setCurrentTrackIndex(newIndex > -1 ? newIndex : null);
     }
@@ -280,7 +281,7 @@ export const useMusicPlayer = (songs: Song[] = []) => {
     playPrev,
     seek,
     setVolume,
-    toggleShuffle,
+    setShuffle,
     toggleLoop,
     playTrack,
     toggleCrossfade,
