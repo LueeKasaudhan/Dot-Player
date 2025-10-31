@@ -108,7 +108,8 @@ const App: React.FC = () => {
     }, []);
 
     const handlePlaySong = useCallback((song: Song) => {
-        const songIndex = activePlaylistSongs.findIndex(s => s.id === song.id);
+        const playlist = player.isShuffle ? player.shuffledPlaylist : activePlaylistSongs;
+        const songIndex = playlist.findIndex(s => s.id === song.id);
         if (songIndex !== -1) {
             player.playTrack(songIndex);
         }

@@ -274,6 +274,7 @@ export const useMusicPlayer = (songs: Song[] = []) => {
     isShuffle,
     loopMode,
     isCrossfade,
+    shuffledPlaylist,
     togglePlayPause,
     playNext,
     playPrev,
