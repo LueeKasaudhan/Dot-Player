@@ -1,0 +1,5 @@
+{
+  "name": "Dot Player",
+  "description": "A web-based music player inspired by the Nothing brand's minimalist and tech-forward aesthetic. It features local music playback with folder imports, simulated YouTube music downloading, and comprehensive playlist management, all within a clean, dot-matrix typographic interface.",
+  "requestFramePermissions": []
+}
